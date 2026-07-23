@@ -1,0 +1,607 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Perks Vault — Members-Only Access</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Unbounded:wght@400;600;800;900&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --bg: #0F0818;
+    --bg-2: #17102A;
+    --violet: #8B5CF6;
+    --violet-deep: #6D28D9;
+    --magenta: #E935C1;
+    --royal: #3B5BFF;
+    --text: #ECE7F9;
+    --text-dim: #9C8FBF;
+    --card-bg: rgba(255,255,255,0.03);
+    --border: rgba(255,255,255,0.08);
+  }
+
+  *{ box-sizing:border-box; margin:0; padding:0; }
+
+  html{ scroll-behavior:smooth; }
+
+  body{
+    background:
+      radial-gradient(ellipse 80% 50% at 20% -10%, rgba(139,92,246,0.25), transparent),
+      radial-gradient(ellipse 60% 40% at 90% 10%, rgba(59,91,255,0.18), transparent),
+      radial-gradient(ellipse 70% 50% at 50% 100%, rgba(233,53,193,0.12), transparent),
+      var(--bg);
+    color: var(--text);
+    font-family: 'Inter', sans-serif;
+    min-height:100vh;
+    overflow-x:hidden;
+  }
+
+  /* ---------- NAV ---------- */
+  nav{
+    display:flex;
+    justify-content:space-between;
+    align-items:center;
+    padding: 28px 6vw;
+    position:relative;
+    z-index:10;
+  }
+  .brand{
+    font-family:'Unbounded', sans-serif;
+    font-weight:800;
+    font-size:1.15rem;
+    letter-spacing:0.02em;
+    display:flex;
+    align-items:center;
+    gap:10px;
+  }
+  .brand-dot{
+    width:10px; height:10px; border-radius:50%;
+    background: linear-gradient(135deg, var(--magenta), var(--royal));
+    box-shadow: 0 0 16px var(--magenta);
+  }
+  .nav-tag{
+    font-size:0.8rem;
+    color: var(--text-dim);
+    border:1px solid var(--border);
+    padding:6px 14px;
+    border-radius:999px;
+    background: rgba(255,255,255,0.02);
+  }
+
+  /* ---------- HERO ---------- */
+  .hero{
+    padding: 8vh 6vw 6vh;
+    position:relative;
+    z-index:5;
+  }
+  .eyebrow{
+    font-size:0.78rem;
+    letter-spacing:0.18em;
+    text-transform:uppercase;
+    color: var(--magenta);
+    font-weight:600;
+    margin-bottom:18px;
+    display:flex;
+    align-items:center;
+    gap:10px;
+  }
+  .eyebrow::before{
+    content:"";
+    width:28px; height:1px;
+    background: linear-gradient(90deg, var(--magenta), transparent);
+  }
+  h1{
+    font-family:'Unbounded', sans-serif;
+    font-weight:900;
+    font-size: clamp(2.4rem, 6vw, 4.6rem);
+    line-height:1.03;
+    letter-spacing:-0.01em;
+    max-width:14ch;
+  }
+  h1 .grad{
+    background: linear-gradient(100deg, var(--violet) 10%, var(--magenta) 50%, var(--royal) 90%);
+    -webkit-background-clip:text;
+    background-clip:text;
+    color:transparent;
+  }
+  .hero p{
+    margin-top:22px;
+    font-size:1.05rem;
+    color: var(--text-dim);
+    max-width:46ch;
+    line-height:1.6;
+  }
+
+  /* ---------- GRID ---------- */
+  .grid-wrap{
+    padding: 2vh 6vw 12vh;
+    position:relative;
+    z-index:5;
+  }
+  .grid{
+    display:grid;
+    grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+    gap: 26px;
+    max-width:1200px;
+  }
+
+  .card{
+    position:relative;
+    aspect-ratio: 1 / 1;
+    border-radius: 22px;
+    padding:1.5px;
+    background: linear-gradient(140deg, rgba(139,92,246,0.5), rgba(255,255,255,0.05) 40%, rgba(59,91,255,0.4) 100%);
+    transition: transform 0.35s ease;
+    display:flex;
+  }
+  .card:hover{ transform: translateY(-6px); }
+  .card:hover .card-inner{
+    box-shadow: 0 0 0 1px rgba(255,255,255,0.06), 0 20px 60px -20px var(--card-glow, rgba(139,92,246,0.5));
+  }
+
+  .card-inner{
+    flex:1;
+    background: linear-gradient(160deg, var(--bg-2), #0d0716);
+    border-radius: 20.5px;
+    padding: 24px;
+    display:flex;
+    flex-direction:column;
+    position:relative;
+    overflow:hidden;
+    transition: box-shadow 0.35s ease;
+  }
+
+  .card-top{
+    display:flex;
+    justify-content:space-between;
+    align-items:flex-start;
+  }
+
+  .logo-badge{
+    width:52px; height:52px;
+    border-radius:14px;
+    display:flex;
+    align-items:center;
+    justify-content:center;
+    flex-shrink:0;
+  }
+  .logo-badge svg{ width:30px; height:30px; }
+
+  .status-pill{
+    font-size:0.68rem;
+    font-weight:600;
+    letter-spacing:0.04em;
+    text-transform:uppercase;
+    color:#B9FFCE;
+    background: rgba(66,255,150,0.08);
+    border:1px solid rgba(66,255,150,0.25);
+    padding:4px 10px;
+    border-radius:999px;
+    white-space:nowrap;
+  }
+
+  .card-body{
+    margin-top:auto;
+    padding-top:20px;
+  }
+
+  .card-name{
+    font-family:'Unbounded', sans-serif;
+    font-weight:700;
+    font-size:1.25rem;
+    margin-bottom:4px;
+  }
+  .card-sub{
+    font-size:0.85rem;
+    color: var(--text-dim);
+    margin-bottom:18px;
+  }
+
+  /* accordion */
+  .unlock-btn{
+    all:unset;
+    cursor:pointer;
+    display:flex;
+    align-items:center;
+    justify-content:space-between;
+    width:100%;
+    font-family:'Inter', sans-serif;
+    font-weight:600;
+    font-size:0.88rem;
+    color: var(--text);
+    background: rgba(255,255,255,0.04);
+    border:1px solid var(--border);
+    padding:11px 14px;
+    border-radius:12px;
+    transition: background 0.25s ease, border-color 0.25s ease;
+  }
+  .unlock-btn:hover{
+    background: rgba(255,255,255,0.07);
+    border-color: rgba(255,255,255,0.16);
+  }
+  .unlock-btn:focus-visible{
+    outline: 2px solid var(--magenta);
+    outline-offset:2px;
+  }
+  .chevron{
+    width:14px; height:14px;
+    transition: transform 0.3s ease;
+    flex-shrink:0;
+  }
+  .card.open .chevron{ transform: rotate(180deg); }
+
+  .unlock-panel{
+    max-height:0;
+    overflow:hidden;
+    transition: max-height 0.35s ease, opacity 0.3s ease, margin-top 0.35s ease;
+    opacity:0;
+  }
+  
+  /* Increased max-height to accommodate longer step-by-step lists */
+  .card.open .unlock-panel{
+    max-height:350px;
+    opacity:1;
+    margin-top:12px;
+  }
+  
+  .unlock-panel-inner{
+    font-size:0.85rem;
+    line-height:1.55;
+    color: var(--text-dim);
+    background: rgba(0,0,0,0.2);
+    border:1px solid var(--border);
+    border-radius:12px;
+    padding:14px;
+    overflow-y: auto; /* Adds scrolling just in case text exceeds max-height */
+    max-height: 330px;
+  }
+  .unlock-panel-inner strong{
+    color: var(--text);
+    font-weight:600;
+  }
+  .unlock-panel-inner a {
+    color: var(--violet);
+    text-decoration: none;
+    font-weight: 500;
+  }
+  .unlock-panel-inner a:hover {
+    text-decoration: underline;
+  }
+  .unlock-panel-inner ol {
+    margin-left: 20px;
+    margin-top: 10px;
+    margin-bottom: 15px;
+    display: flex;
+    flex-direction: column;
+    gap: 6px;
+  }
+
+  .email-line{
+    margin-top:10px;
+    display:flex;
+    align-items:center;
+    gap:8px;
+    flex-wrap:wrap;
+  }
+  .email-chip{
+    font-family: monospace;
+    font-size:0.82rem;
+    color: var(--text);
+    background: rgba(139,92,246,0.14);
+    border:1px solid rgba(139,92,246,0.35);
+    padding:5px 10px;
+    border-radius:8px;
+  }
+  .copy-btn{
+    all:unset;
+    cursor:pointer;
+    font-size:0.75rem;
+    color: var(--magenta);
+    font-weight:600;
+    padding:5px 9px;
+    border-radius:8px;
+    border:1px solid rgba(233,53,193,0.35);
+    transition: background 0.2s ease;
+  }
+  .copy-btn:hover{ background: rgba(233,53,193,0.1); }
+  .copy-btn:focus-visible{ outline:2px solid var(--magenta); outline-offset:2px; }
+
+  /* per-card accent glow colors */
+  .card[data-tone="yt"]{ --card-glow: rgba(255,60,60,0.35); }
+  .card[data-tone="pv"]{ --card-glow: rgba(0,168,255,0.35); }
+  .card[data-tone="hs"]{ --card-glow: rgba(139,92,246,0.4); }
+  .card[data-tone="sl"]{ --card-glow: rgba(233,53,193,0.4); }
+
+  footer{
+    padding: 4vh 6vw 6vh;
+    color: var(--text-dim);
+    font-size:0.85rem;
+    border-top:1px solid var(--border);
+    display:flex;
+    justify-content:space-between;
+    flex-wrap:wrap;
+    gap:10px;
+  }
+  footer a{ color: var(--violet); text-decoration:none; }
+  footer a:hover{ text-decoration:underline; }
+
+  @media (prefers-reduced-motion: reduce){
+    *{ transition:none !important; }
+  }
+
+  @media (max-width:480px){
+    .grid{ grid-template-columns: 1fr 1fr; gap:16px; }
+    .card{ aspect-ratio:auto; }
+    h1{ max-width: none; }
+  }
+</style>
+</head>
+<body>
+
+<nav>
+  <div class="brand"><span class="brand-dot"></span>PERKS VAULT</div>
+  <div class="nav-tag">Invite-only · 1 winner</div>
+</nav>
+
+<section class="hero">
+  <div class="eyebrow">Giveaway access</div>
+  <h1>Four premium <span class="grad">memberships.</span><br>One winner.</h1>
+  <p>Everything below is mine — I'm giving one lucky person access as part of a giveaway. Tap a card to see how to claim it. No forms, no catches — just reach out.</p>
+</section>
+
+<div class="grid-wrap">
+  <div class="grid">
+
+    <!-- 1. YouTube Premium -->
+    <div class="card" data-tone="yt">
+      <div class="card-inner">
+        <div class="card-top">
+          <div class="logo-badge" style="background:rgba(255,0,0,0.1); border:1px solid rgba(255,0,0,0.25);">
+            <svg viewBox="0 0 28 20" fill="none" xmlns="http://www.w3.org/2000/svg">
+              <path d="M27.4 3.1C27.1 2 26.2 1.1 25.1 0.8C23 0.2 14 0.2 14 0.2C14 0.2 5 0.2 2.9 0.8C1.8 1.1 0.9 2 0.6 3.1C0 5.2 0 10 0 10C0 10 0 14.8 0.6 16.9C0.9 18 1.8 18.9 2.9 19.2C5 19.8 14 19.8 14 19.8C14 19.8 23 19.8 25.1 19.2C26.2 18.9 27.1 18 27.4 16.9C28 14.8 28 10 28 10C28 10 28 5.2 27.4 3.1Z" fill="#FF0000"/>
+              <path d="M11 14.3L18.5 10L11 5.7V14.3Z" fill="white"/>
+            </svg>
+          </div>
+          <span class="status-pill">● Live</span>
+        </div>
+        <div class="card-body">
+          <div class="card-name">YouTube Premium</div>
+          <div class="card-sub">Ad-free, background play, offline</div>
+          <button class="unlock-btn" onclick="toggleCard(this)" aria-expanded="false">
+            How to unlock
+            <svg class="chevron" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M6 9l6 6 6-6"/></svg>
+          </button>
+          <div class="unlock-panel">
+            <div class="unlock-panel-inner">
+              <strong>Steps to Activate Free Youtube Premium:</strong>
+              <ol>
+                <li>Visit <a href="https://www.oxaam.com/official.php?id=vdio" target="_blank">Official Website</a>.</li>
+                <li>Install the <a href="https://chromewebstore.google.com/detail/cookie-editor/hlkenndednhfkekhgcdicdfddnkalmdm?hl=en" target="_blank">Cookie Editor</a> extension.</li>
+                <li>Open Youtube and click the Cookie Editor icon.</li>
+                <li>Click Import and paste the JSON cookies below.</li>
+                <li>Click Save, refresh Youtube - you’ll be logged in.</li>
+              </ol>
+              <div id="yt-cookie" style="display:none;">[PASTE 1ST COOKIE JSON HERE]</div>
+              <a href="javascript:void(0)" class="copy-btn" style="display:block; text-align:center; padding:8px; text-decoration:none;" onclick="copyText('yt-cookie', this)">📋 Copy Cookies</a>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- 2. Prime Video -->
+    <div class="card" data-tone="pv">
+      <div class="card-inner">
+        <div class="card-top">
+          <div class="logo-badge" style="background:rgba(0,168,255,0.1); border:1px solid rgba(0,168,255,0.25);">
+            <svg viewBox="0 0 32 32" fill="none" xmlns="http://www.w3.org/2000/svg">
+              <path d="M16 6C10 6 5 9 3 13.5C2.7 14.2 3.4 14.8 4 14.4C7.6 12.1 11.6 11 16 11C20.4 11 24.4 12.1 28 14.4C28.6 14.8 29.3 14.2 29 13.5C27 9 22 6 16 6Z" fill="#00A8E1"/>
+              <path d="M29.5 17.5C29.2 17.2 26.8 16.7 25 17.9C24.8 18 25 18.2 25.2 18.2C25.9 18.1 27.4 17.9 27.7 18.3C28 18.7 27.3 20.5 27 21.3C26.9 21.5 27.1 21.6 27.3 21.5C28.6 20.4 29.9 18.1 29.5 17.5Z" fill="#00A8E1"/>
+              <path d="M25 18C21 20.8 16 22.3 11 22.3C6 22.3 2.5 20.4 0.2 18.4C0 18.2 0.2 18 0.4 18.1C4.3 20.4 8.6 21.8 13 21.8C17 21.8 21.3 20.7 25 18.3C25.3 18.1 25.3 18.2 25 18Z" fill="#00A8E1"/>
+              <text x="16" y="18" font-family="Arial" font-size="10" fill="#00A8E1" text-anchor="middle" font-weight="bold" opacity="0"> </text>
+            </svg>
+          </div>
+          <span class="status-pill">● Live</span>
+        </div>
+        <div class="card-body">
+          <div class="card-name">Prime Video</div>
+          <div class="card-sub">Movies, series, and originals</div>
+          <button class="unlock-btn" onclick="toggleCard(this)" aria-expanded="false">
+            How to unlock
+            <svg class="chevron" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M6 9l6 6 6-6"/></svg>
+          </button>
+          <div class="unlock-panel">
+            <div class="unlock-panel-inner">
+              <strong>Steps to Activate Free Prime Video:</strong>
+              <ol>
+                <li>Visit <a href="https://www.oxaam.com/official.php?id=krus" target="_blank">Official Website</a>.</li>
+                <li>Install the <a href="https://chromewebstore.google.com/detail/cookie-editor/hlkenndednhfkekhgcdicdfddnkalmdm?hl=en" target="_blank">Cookie Editor</a> extension.</li>
+                <li>Open Prime and click the Cookie Editor icon.</li>
+                <li>Click Import and paste the JSON cookies below.</li>
+                <li>Click Save, refresh Prime - you’ll be logged in.</li>
+              </ol>
+              <div id="pv-cookie" style="display:none;">[PASTE 2ND COOKIE JSON HERE]</div>
+              <a href="javascript:void(0)" class="copy-btn" style="display:block; text-align:center; padding:8px; text-decoration:none;" onclick="copyText('pv-cookie', this)">📋 Copy Cookies</a>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- 3. Jio Hotstar -->
+    <div class="card" data-tone="hs">
+      <div class="card-inner">
+        <div class="card-top">
+          <div class="logo-badge" style="background:rgba(139,92,246,0.12); border:1px solid rgba(139,92,246,0.3);">
+            <svg viewBox="0 0 32 32" fill="none" xmlns="http://www.w3.org/2000/svg">
+              <circle cx="16" cy="16" r="13" fill="none" stroke="#8B5CF6" stroke-width="2.4"/>
+              <path d="M16 8L18 14L24 14L19 18L21 24L16 20L11 24L13 18L8 14L14 14Z" fill="#8B5CF6"/>
+            </svg>
+          </div>
+          <span class="status-pill">● Live</span>
+        </div>
+        <div class="card-body">
+          <div class="card-name">Jio Hotstar</div>
+          <div class="card-sub">Sports, shows, and blockbusters</div>
+          <button class="unlock-btn" onclick="toggleCard(this)" aria-expanded="false">
+            How to unlock
+            <svg class="chevron" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M6 9l6 6 6-6"/></svg>
+          </button>
+          <div class="unlock-panel">
+            <div class="unlock-panel-inner">
+              <strong>Steps to Activate Free Jio Hotstar:</strong>
+              <ol>
+                <li>Visit <a href="https://www.oxaam.com/official.php?id=aapk" target="_blank">Official Website</a>.</li>
+                <li>Install the <a href="https://chromewebstore.google.com/detail/cookie-editor/hlkenndednhfkekhgcdicdfddnkalmdm?hl=en" target="_blank">Cookie Editor</a> extension.</li>
+                <li>Open Jio Hotstar and click the Cookie Editor icon.</li>
+                <li>Click Import and paste the JSON cookies below.</li>
+                <li>Click Save, refresh Jio Hotstar - you’ll be logged in.</li>
+              </ol>
+              <div id="hs-cookie" style="display:none;">[PASTE 3RD COOKIE JSON HERE]</div>
+              <a href="javascript:void(0)" class="copy-btn" style="display:block; text-align:center; padding:8px; text-decoration:none;" onclick="copyText('hs-cookie', this)">📋 Copy Cookies</a>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- 4. SonyLIV -->
+    <div class="card" data-tone="sl">
+      <div class="card-inner">
+        <div class="card-top">
+          <div class="logo-badge" style="background:rgba(233,53,193,0.1); border:1px solid rgba(233,53,193,0.3);">
+            <svg viewBox="0 0 32 32" fill="none" xmlns="http://www.w3.org/2000/svg">
+              <rect x="3" y="9" width="26" height="14" rx="7" fill="none" stroke="#E935C1" stroke-width="2.2"/>
+              <circle cx="11" cy="16" r="2.6" fill="#E935C1"/>
+              <circle cx="21" cy="16" r="2.6" fill="#E935C1"/>
+            </svg>
+          </div>
+          <span class="status-pill">● Live</span>
+        </div>
+        <div class="card-body">
+          <div class="card-name">SonyLIV</div>
+          <div class="card-sub">Live sports and Sony originals</div>
+          <button class="unlock-btn" onclick="toggleCard(this)" aria-expanded="false">
+            How to unlock
+            <svg class="chevron" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M6 9l6 6 6-6"/></svg>
+          </button>
+          <div class="unlock-panel">
+            <div class="unlock-panel-inner">
+              <strong>Steps to Activate Free Sony Liv:</strong>
+              <p style="margin-top: 10px; margin-bottom: 12px;">Visit <a href="https://www.oxaam.com/official.php?id=sliby" target="_blank">Official Website</a>. First, open the official website. There, you will see the “Login with Google” option—select that. You will need to sign in using Google; do not log in directly. Once the Gmail page opens, use the email and password provided below to log in.</p>
+              
+              <div class="email-line" style="margin-bottom:8px;">
+                Email ➜ <span class="email-chip" id="email-sl">adoubye1667@pablez.shop</span>
+                <button class="copy-btn" style="padding:4px 8px;" onclick="copyText('email-sl', this)">📋</button>
+              </div>
+              <div class="email-line">
+                Password ➜ <span class="email-chip" id="pass-sl">Oxaam5152</span>
+                <button class="copy-btn" style="padding:4px 8px;" onclick="copyText('pass-sl', this)">📋</button>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- FanCode -->
+    <div class="card" data-tone="fc">
+      <div class="card-inner">
+        <div class="card-top">
+          <div class="logo-badge" style="background:rgba(34,197,94,0.1); border:1px solid rgba(34,197,94,0.3);">
+            <svg viewBox="0 0 32 32" fill="none" xmlns="http://www.w3.org/2000/svg">
+              <path d="M16 3L27 8.5V16C27 22.5 22.3 27.6 16 29C9.7 27.6 5 22.5 5 16V8.5L16 3Z" fill="none" stroke="#22C55E" stroke-width="2.2"/>
+              <path d="M12 12H20M12 16H19M12 20H17" stroke="#22C55E" stroke-width="2" stroke-linecap="round"/>
+            </svg>
+          </div>
+          <span class="status-pill">● Live</span>
+        </div>
+        <div class="card-body">
+          <div class="card-name">FanCode</div>
+          <div class="card-sub">Cricket and live sports streaming</div>
+          <button class="unlock-btn" onclick="toggleCard(this)" aria-expanded="false">
+            How to unlock
+            <svg class="chevron" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M6 9l6 6 6-6"/></svg>
+          </button>
+          <div class="unlock-panel">
+            <div class="unlock-panel-inner">
+              <strong>Want in?</strong> Message me on my professional email and I'll set you up if you're the winner.
+              <div class="email-line">
+                <span class="email-chip" id="email-fc">yourname@yourdomain.com</span>
+                <button class="copy-btn" onclick="copyText('email-fc', this)">Copy email</button>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Crunchyroll -->
+    <div class="card" data-tone="cr">
+      <div class="card-inner">
+        <div class="card-top">
+          <div class="logo-badge" style="background:rgba(255,102,0,0.1); border:1px solid rgba(255,102,0,0.3);">
+            <svg viewBox="0 0 32 32" fill="none" xmlns="http://www.w3.org/2000/svg">
+              <circle cx="16" cy="16" r="13" fill="none" stroke="#FF6600" stroke-width="2.4"/>
+              <circle cx="16" cy="16" r="6.5" fill="none" stroke="#FF6600" stroke-width="2"/>
+              <circle cx="16" cy="9.7" r="1.8" fill="#FF6600"/>
+            </svg>
+          </div>
+          <span class="status-pill">● Live</span>
+        </div>
+        <div class="card-body">
+          <div class="card-name">Crunchyroll</div>
+          <div class="card-sub">Anime, simulcasts, and manga</div>
+          <button class="unlock-btn" onclick="toggleCard(this)" aria-expanded="false">
+            How to unlock
+            <svg class="chevron" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M6 9l6 6 6-6"/></svg>
+          </button>
+          <div class="unlock-panel">
+            <div class="unlock-panel-inner">
+              <strong>Want in?</strong> Message me on my professional email and I'll set you up if you're the winner.
+              <div class="email-line">
+                <span class="email-chip" id="email-cr">yourname@yourdomain.com</span>
+                <button class="copy-btn" onclick="copyText('email-cr', this)">Copy email</button>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+  </div>
+</div>
+
+<footer>
+  <span>Perks Vault — a small personal giveaway.</span>
+  <span>Questions? <a href="mailto:yourname@yourdomain.com">yourname@yourdomain.com</a></span>
+</footer>
+
+<script>
+  function toggleCard(btn){
+    const card = btn.closest('.card');
+    const isOpen = card.classList.contains('open');
+    document.querySelectorAll('.card.open').forEach(c => {
+      if(c !== card){
+        c.classList.remove('open');
+        c.querySelector('.unlock-btn').setAttribute('aria-expanded','false');
+      }
+    });
+    card.classList.toggle('open', !isOpen);
+    btn.setAttribute('aria-expanded', String(!isOpen));
+  }
+
+  // Generalized function to copy text from any given ID
+  function copyText(id, btn){
+    const text = document.getElementById(id).textContent;
+    navigator.clipboard.writeText(text).then(() => {
+      const original = btn.innerHTML;
+      btn.innerHTML = 'Copied!';
+      setTimeout(() => btn.innerHTML = original, 1500);
+    });
+  }
+</script>
+
+</body>
+</html>
