@@ -60,14 +60,6 @@
     background: linear-gradient(135deg, var(--magenta), var(--royal));
     box-shadow: 0 0 16px var(--magenta);
   }
-  .nav-tag{
-    font-size:0.8rem;
-    color: var(--text-dim);
-    border:1px solid var(--border);
-    padding:6px 14px;
-    border-radius:999px;
-    background: rgba(255,255,255,0.02);
-  }
 
   /* ---------- HERO (UPDATED) ---------- */
   .hero-simple {
@@ -95,11 +87,11 @@
   }
   .grid{
     display:grid;
-    grid-template-columns: repeat(3, 1fr); /* Forces exactly 3 per row */
+    grid-template-columns: repeat(3, 1fr);
     gap: 26px;
     max-width:1200px;
     margin: 0 auto;
-    align-items: start; /* Fixes alignment: prevents expanding one card from stretching others in the row */
+    align-items: start;
   }
 
   .card{
@@ -133,7 +125,7 @@
     align-items:flex-start;
   }
 
-  /* UPDATED LOGO BADGE */
+  /* LOGO BADGE (Using Google Favicon API for reliable official app icons) */
   .logo-badge{
     width:52px; height:52px;
     border-radius:14px;
@@ -141,14 +133,14 @@
     align-items:center;
     justify-content:center;
     flex-shrink:0;
-    background: #ffffff; /* White base for official logos */
+    background: rgba(255,255,255,0.03); 
     overflow: hidden;
-    padding: 6px; /* Padding to fit the logos nicely */
   }
   .logo-badge img { 
     width: 100%; 
     height: 100%; 
-    object-fit: contain; 
+    object-fit: cover; 
+    border-radius: 14px;
   }
 
   .status-pill{
@@ -221,7 +213,6 @@
     opacity:0;
   }
   
-  /* Increased max-height significantly to show all steps without a scrollbar */
   .card.open .unlock-panel{
     max-height:800px;
     opacity:1;
@@ -236,7 +227,6 @@
     border:1px solid var(--border);
     border-radius:12px;
     padding:14px;
-    /* Removed max-height here so the content expands naturally */
   }
   .unlock-panel-inner strong{
     color: var(--text);
@@ -295,24 +285,10 @@
   .card[data-tone="hs"]{ --card-glow: rgba(139,92,246,0.4); }
   .card[data-tone="sl"]{ --card-glow: rgba(233,53,193,0.4); }
 
-  footer{
-    padding: 4vh 6vw 6vh;
-    color: var(--text-dim);
-    font-size:0.85rem;
-    border-top:1px solid var(--border);
-    display:flex;
-    justify-content:space-between;
-    flex-wrap:wrap;
-    gap:10px;
-  }
-  footer a{ color: var(--violet); text-decoration:none; }
-  footer a:hover{ text-decoration:underline; }
-
   @media (prefers-reduced-motion: reduce){
     *{ transition:none !important; }
   }
 
-  /* Responsive Grid Adjustments */
   @media (max-width:950px){
     .grid{ grid-template-columns: repeat(2, 1fr); }
   }
@@ -325,7 +301,6 @@
 
 <nav>
   <div class="brand"><span class="brand-dot"></span>OTT VAULT</div>
-  <div class="nav-tag">Invite-only · 1 winner</div>
 </nav>
 
 <section class="hero-simple">
@@ -340,7 +315,7 @@
       <div class="card-inner">
         <div class="card-top">
           <div class="logo-badge">
-            <img src="https://logo.clearbit.com/youtube.com" alt="YouTube Premium">
+            <img src="https://www.google.com/s2/favicons?domain=youtube.com&sz=128" alt="YouTube Premium">
           </div>
           <span class="status-pill">● Live</span>
         </div>
@@ -374,7 +349,7 @@
       <div class="card-inner">
         <div class="card-top">
           <div class="logo-badge">
-            <img src="https://logo.clearbit.com/primevideo.com" alt="Prime Video">
+            <img src="https://www.google.com/s2/favicons?domain=primevideo.com&sz=128" alt="Prime Video">
           </div>
           <span class="status-pill">● Live</span>
         </div>
@@ -408,7 +383,7 @@
       <div class="card-inner">
         <div class="card-top">
           <div class="logo-badge">
-            <img src="https://logo.clearbit.com/hotstar.com" alt="Jio Hotstar">
+            <img src="https://www.google.com/s2/favicons?domain=hotstar.com&sz=128" alt="Jio Hotstar">
           </div>
           <span class="status-pill">● Live</span>
         </div>
@@ -442,7 +417,7 @@
       <div class="card-inner">
         <div class="card-top">
           <div class="logo-badge">
-            <img src="https://logo.clearbit.com/sonyliv.com" alt="SonyLIV">
+            <img src="https://www.google.com/s2/favicons?domain=sonyliv.com&sz=128" alt="SonyLIV">
           </div>
           <span class="status-pill">● Live</span>
         </div>
@@ -477,7 +452,7 @@
       <div class="card-inner">
         <div class="card-top">
           <div class="logo-badge">
-            <img src="https://logo.clearbit.com/fancode.com" alt="FanCode">
+            <img src="https://www.google.com/s2/favicons?domain=fancode.com&sz=128" alt="FanCode">
           </div>
           <span class="status-pill">● Live</span>
         </div>
@@ -506,7 +481,7 @@
       <div class="card-inner">
         <div class="card-top">
           <div class="logo-badge">
-            <img src="https://logo.clearbit.com/crunchyroll.com" alt="Crunchyroll">
+            <img src="https://www.google.com/s2/favicons?domain=crunchyroll.com&sz=128" alt="Crunchyroll">
           </div>
           <span class="status-pill">● Live</span>
         </div>
@@ -532,11 +507,6 @@
 
   </div>
 </div>
-
-<footer>
-  <span>OTT Vault — a small personal giveaway.</span>
-  <span>Questions? <a href="mailto:yourname@yourdomain.com">yourname@yourdomain.com</a></span>
-</footer>
 
 <script>
   function toggleCard(btn){
