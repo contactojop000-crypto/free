@@ -301,7 +301,38 @@
 <body>
 
 <nav>
-  <div class="brand"><span class="brand-dot"></span>OTT VAULT</div>
+  <div class="brand">
+  <svg width="180" height="40" viewBox="0 0 180 40" xmlns="http://www.w3.org/2000/svg" style="display: block;">
+    <defs>
+      <!-- Gradient matching your CSS theme -->
+      <linearGradient id="ottGrad" x1="0%" y1="0%" x2="100%" y2="100%">
+        <stop offset="10%" stop-color="#8B5CF6" /> <!-- Violet -->
+        <stop offset="50%" stop-color="#E935C1" /> <!-- Magenta -->
+        <stop offset="90%" stop-color="#3B5BFF" /> <!-- Royal -->
+      </linearGradient>
+      
+      <!-- Subtle Neon Glow Filter -->
+      <filter id="neonGlow" x="-20%" y="-20%" width="140%" height="140%">
+        <feGaussianBlur stdDeviation="2" result="blur" />
+        <feMerge>
+          <feMergeNode in="blur" />
+          <feMergeNode in="SourceGraphic" />
+        </feMerge>
+      </filter>
+    </defs>
+
+    <!-- Logo Icon: A Vault/Screen with a Play Button -->
+    <g filter="url(#neonGlow)">
+      <!-- Outer Box -->
+      <rect x="2" y="4" width="32" height="32" rx="8" fill="none" stroke="url(#ottGrad)" stroke-width="3"/>
+      <!-- Play Triangle -->
+      <polygon points="14,12 14,28 26,20" fill="url(#ottGrad)"/>
+    </g>
+
+    <!-- Text: OTT VAULT -->
+    <text x="46" y="27" font-family="'Unbounded', sans-serif" font-weight="900" font-size="20" fill="#ECE7F9" letter-spacing="1">OTT VAULT</text>
+  </svg>
+</div>
 </nav>
 
 <section class="hero-simple">
